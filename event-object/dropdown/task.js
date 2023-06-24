@@ -1,19 +1,33 @@
-const value = document.querySelector('.dropdown__value'),
+const dropValue = document.querySelectorAll('.dropdown__value'),
     dropLink = document.querySelectorAll('.dropdown__link'),
-    dropList = document.querySelector('.dropdown__list');
+    dropList = document.querySelectorAll('.dropdown__list');
 
-console.log('value', value);
-console.log('dropLink', dropLink);
-console.log('dropList', dropList);
-
-value.onclick = () => {
-    dropList.className = 'dropdown__list dropdown__list_active';
-};
+dropValue.forEach((element) => {
+    element.addEventListener('click', () => hideMenu(element));
+});
 
 dropLink.forEach((element) => {
-    element.onclick = () => {
-        value.textContent = element.textContent;
-        dropList.className = 'dropdown__list';
-        return false;
-    };
+    element.addEventListener('click', function(event) {
+        replaceDropValue(element);
+        event.preventDefault();    
+    });
 });
+
+function replaceDropValue(element) {
+    const parent = element.closest('.card');
+    const value = parent.querySelector('.dropdown__value');
+    const list = parent.querySelector('.dropdown__list');
+    list.className = 'dropdown__list';
+    value.textContent = element.textContent;  
+};
+
+function hideMenu(element) {
+    dropList.forEach((value) => {
+        if (value.className.includes('active')) {
+            value.className = 'dropdown__list';
+        };
+    });
+    const parent = element.closest('.card');
+    const list = parent.querySelector('.dropdown__list');
+    list.className = 'dropdown__list dropdown__list_active';
+};
