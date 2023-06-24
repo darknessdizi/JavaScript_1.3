@@ -4,10 +4,23 @@ class Game {
     this.wordElement = container.querySelector('.word');
     this.winsElement = container.querySelector('.status__wins');
     this.lossElement = container.querySelector('.status__loss');
+    this.timer = container.querySelector(".timer");
 
     this.reset();
 
     this.registerEvents();
+  }
+
+  setTimer() {
+    this.timer.textContent = this.wordElement.textContent.length;
+    this.idInterval = setInterval(() => {
+      if (this.timer.textContent == 0) {
+        alert("Время вышло!!!");
+        clearInterval(this.idInterval);
+        this.reset();
+      };
+      this.timer.textContent -= 1; 
+    }, 1000);
   }
 
   reset() {
@@ -17,14 +30,22 @@ class Game {
   }
 
   registerEvents() {
-    /*
-      TODO:
-      Написать обработчик события, который откликается
-      на каждый введённый символ.
-      В случае правильного ввода слова вызываем this.success()
-      При неправильном вводе символа - this.fail();
-      DOM-элемент текущего символа находится в свойстве this.currentSymbol.
-     */
+    window.addEventListener('keyup', (event) => {
+      // console.log(event.key.charCodeAt(), event.code)
+      // console.log(String.fromCharCode(event.key.charCodeAt()))
+      
+      if (['Shift', 'Alt', 'CapsLock', 'Control'].includes(event.key)) {
+        return false;
+      }
+      if (this.currentSymbol.textContent.charCodeAt() == 32) {
+        this.currentSymbol.className = 'space'
+      };
+      if (event.key.toLowerCase() == this.currentSymbol.textContent.toLowerCase()) {
+        this.success();
+      } else {
+        this.fail();
+      }
+    });
   }
 
   success() {
@@ -39,38 +60,42 @@ class Game {
 
     if (++this.winsElement.textContent === 10) {
       alert('Победа!');
+      clearInterval(this.idInterval);
       this.reset();
     }
+    clearInterval(this.idInterval);
     this.setNewWord();
   }
 
   fail() {
     if (++this.lossElement.textContent === 5) {
       alert('Вы проиграли!');
+      clearInterval(this.idInterval);
       this.reset();
     }
+    clearInterval(this.idInterval);
     this.setNewWord();
   }
 
   setNewWord() {
     const word = this.getWord();
-
     this.renderWord(word);
+    this.setTimer();
   }
 
   getWord() {
     const words = [
-        'bob',
-        'awesome',
-        'netology',
-        'hello',
-        'kitty',
-        'rock',
-        'youtube',
-        'popcorn',
-        'cinema',
-        'love',
-        'javascript'
+        'bob саша',
+        'awesome лиза',
+        'netology аня',
+        'hello катя',
+        'kitty мила',
+        'rock маша',
+        'Youtube ира',
+        'popcorn юля',
+        'cinema ксюша',
+        'love таня',
+        'javascript лена'
       ],
       index = Math.floor(Math.random() * words.length);
 
@@ -90,5 +115,4 @@ class Game {
   }
 }
 
-new Game(document.getElementById('game'))
-
+new Game(document.getElementById('game'));

@@ -3,7 +3,7 @@
 }
 
 .symbol_correct {
-  color: green;
+  color: #008000;
 }
 
 .word_incorrect {
@@ -11,3 +11,7 @@
   color: #fff;
 }
 
+.space {
+  border-bottom: 3px #008000 solid;
+  font-size: 50px;
+}
