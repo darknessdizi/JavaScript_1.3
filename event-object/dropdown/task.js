@@ -1,6 +1,6 @@
-const dropValue = document.querySelectorAll('.dropdown__value'),
-    dropLink = document.querySelectorAll('.dropdown__link'),
-    dropList = document.querySelectorAll('.dropdown__list');
+const dropValue = document.querySelectorAll('.dropdown__value');
+const dropLink = document.querySelectorAll('.dropdown__link');
+const dropList = document.querySelectorAll('.dropdown__list');
 
 dropValue.forEach((element) => {
     element.addEventListener('click', () => hideMenu(element));

@@ -30,15 +30,12 @@ class Game {
   }
 
   registerEvents() {
-    window.addEventListener('keyup', (event) => {
-      // console.log(event.key.charCodeAt(), event.code)
-      // console.log(String.fromCharCode(event.key.charCodeAt()))
-      
+    window.addEventListener('keyup', (event) => {    
       if (['Shift', 'Alt', 'CapsLock', 'Control'].includes(event.key)) {
         return false;
       }
       if (this.currentSymbol.textContent.charCodeAt() == 32) {
-        this.currentSymbol.className = 'space'
+        this.currentSymbol.className = 'space';
       };
       if (event.key.toLowerCase() == this.currentSymbol.textContent.toLowerCase()) {
         this.success();
